@@ -13,3 +13,13 @@ OVERVIEW OF THE FINDER APPLICATION
 - ex. In-N-Out: 4.5 Stars, reviewers commonly described this place as "cheap, convenient, tasty"
     
 '''
+
+from selenium import webdriver # imports the webdriver
+from selenium.webdriver.common.keys import Keys # allows us to use input
+from selenium.webdriver.common.by import By # 
+
+# google maps url:  https://www.google.com/maps/@32.7678627,-117.0676283,3643m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MDMxOC4wIKXMDSoJLDEwMjExNjQwSAFQAw%3D%3D
+url = 'https://www.google.com/maps/@32.7678627,-117.0676283,3643m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MDMxOC4wIKXMDSoJLDEwMjExNjQwSAFQAw%3D%3D'
+
+driver = webdriver.Chrome() # browser to use
+driver.get(url)
