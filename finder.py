@@ -32,4 +32,24 @@ driver.get(url)
 
 driver.implicitly_wait(0.5) # using an implicit wait to help us sync browser and code so that it does not return an exception
 
+# use a while loop to ask for the kind of input (zip code vs city)
+# prototype implementation
+
+type = ''
+while type != 'CITY' or type != 'ZIP CODE':
+    type = input("Enter if you are searching by CITY or ZIP CODE")
+
+if type == 'CITY': # if it equals to city, use the city as the input for our method
+    pass
+else: # else if not city, we will pass in the zipcode
+    pass
+
+# prompt the user for what they are searching for in the area
+reason = ''
+while reason == '':
+    reason = input(f'What are you searching for in {type}')
+
+# temp implementation of passing in CITY or ZIP CODE
+# ex. VARIABLE.send_keys('REASON in CITY/ZIP CODE')
+
 driver.close() # closes the browser
