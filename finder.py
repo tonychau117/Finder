@@ -7,7 +7,12 @@ OVERVIEW OF THE FINDER APPLICATION
     - the reviews will be stored in an array, holding the most five recent?
     - the information will be displayed if requested
 
+- greet the user
 - prompt the user if they want to search by zip code or city name
+    - if statements to control proper input
+    - loop until the correct response has been found
+- query the input
+    - ensure that the input is valid?
 
 - may leverage an algorithm that finds keywords to display information about the places
 - ex. In-N-Out: 4.5 Stars, reviewers commonly described this place as "cheap, convenient, tasty"
@@ -23,3 +28,8 @@ url = 'https://www.google.com/maps/@32.7678627,-117.0676283,3643m/data=!3m1!1e3?
 
 driver = webdriver.Chrome() # browser to use
 driver.get(url)
+
+
+driver.implicitly_wait(0.5) # using an implicit wait to help us sync browser and code so that it does not return an exception
+
+driver.close() # closes the browser
