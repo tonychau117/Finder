@@ -29,12 +29,13 @@ url = 'https://www.google.com/maps/@32.7678627,-117.0676283,3643m/data=!3m1!1e3?
 # use a while loop to ask for the kind of input (zip code vs city)
 # prototype implementation
 
-type = ''
-while type != 'CITY' or type != 'ZIP CODE':
-    type = input("Enter if you are searching by CITY or ZIP CODE")
+loc_method = ['city', 'method']
+
+type = input("Enter if you are searching by CITY or ZIP CODE")
+print(type.lower())
 
 if type == 'CITY': # if it equals to city, use the city as the input for our method
-    pass
+    print('works')
 else: # else if not city, we will pass in the zipcode
     pass
 
@@ -43,11 +44,12 @@ reason = ''
 while reason == '':
     reason = input(f'What are you searching for in {type}')
 
-driver = webdriver.Chrome() # browser to use
-driver.get(url)
+#driver = webdriver.Chrome() # browser to use
+#driver.get('https://www.google.com/')
+# driver.implicitly_wait(5) # using an implicit wait to help us sync browser and code so that it does not return an exception
 
-driver.implicitly_wait(5) # using an implicit wait to help us sync browser and code so that it does not return an exception
-
+driver = webdriver.ChromiumEdge()
+driver.get('https://www.google.com/')
 
 
 # temp implementation of passing in CITY or ZIP CODE
@@ -56,4 +58,4 @@ driver.implicitly_wait(5) # using an implicit wait to help us sync browser and c
 # create a list of locations            
 # filter by class name or class ID
 
-driver.close() # closes the browser
+# driver.close() # closes the browser 
