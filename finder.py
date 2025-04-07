@@ -29,15 +29,17 @@ url = 'https://www.google.com/maps/@32.7678627,-117.0676283,3643m/data=!3m1!1e3?
 # use a while loop to ask for the kind of input (zip code vs city)
 # prototype implementation
 
-loc_method = ['city', 'method']
+loc_method = ['city', 'zip code']
 
 type = input("Enter if you are searching by CITY or ZIP CODE")
 print(type.lower())
 
-if type == 'CITY': # if it equals to city, use the city as the input for our method
+if type.lower() in loc_method: # if it is in the loc_method
     print('works')
-else: # else if not city, we will pass in the zipcode
-    pass
+else: # else if not city, we constantly ask until we get the right
+    while type.lower() not in loc_method:
+        type = input("Enter if you are searching by CITY or ZIP CODE")
+
 
 # prompt the user for what they are searching for in the area
 reason = ''
@@ -48,9 +50,17 @@ while reason == '':
 #driver.get('https://www.google.com/')
 # driver.implicitly_wait(5) # using an implicit wait to help us sync browser and code so that it does not return an exception
 
-driver = webdriver.ChromiumEdge()
-driver.get('https://www.google.com/')
+'''
+options = webdriver.FirefoxOptions()
+driver = webdriver.Firefox(options = options)
+driver.get(url)
+'''
 
+'''
+chromeOptions = webdriver.ChromeOptions()
+chromeDriver = webdriver.Chrome(options = chromeOptions)
+chromeDriver.get(url)
+'''
 
 # temp implementation of passing in CITY or ZIP CODE
 # ex. VARIABLE.send_keys('REASON in CITY/ZIP CODE')
