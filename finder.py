@@ -23,7 +23,6 @@ from selenium import webdriver # imports the webdriver
 from selenium.webdriver.common.keys import Keys # allows us to use input
 from selenium.webdriver.common.by import By # 
 
-# google maps url:  https://www.google.com/maps/@32.7678627,-117.0676283,3643m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MDMxOC4wIKXMDSoJLDEwMjExNjQwSAFQAw%3D%3D
 url = 'https://www.google.com/maps/@32.7678627,-117.0676283,3643m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MDMxOC4wIKXMDSoJLDEwMjExNjQwSAFQAw%3D%3D'
 
 # use a while loop to ask for the kind of input (zip code vs city)
@@ -40,27 +39,32 @@ else: # else if not city, we constantly ask until we get the right
     while type.lower() not in loc_method:
         type = input("Enter if you are searching by CITY or ZIP CODE")
 
+loc_name = input(f'Enter the {type}')
 
 # prompt the user for what they are searching for in the area
 reason = ''
 while reason == '':
-    reason = input(f'What are you searching for in {type}')
+    reason = input(f'What are you searching for in {loc_name}')
 
-#driver = webdriver.Chrome() # browser to use
-#driver.get('https://www.google.com/')
-# driver.implicitly_wait(5) # using an implicit wait to help us sync browser and code so that it does not return an exception
-
-'''
 options = webdriver.FirefoxOptions()
 driver = webdriver.Firefox(options = options)
 driver.get(url)
-'''
 
-'''
-chromeOptions = webdriver.ChromeOptions()
-chromeDriver = webdriver.Chrome(options = chromeOptions)
-chromeDriver.get(url)
-'''
+driver.implicitly_wait(5) # using an implicit wait to help us sync browser and code so that it does not return an exception
+
+# implement code to find the text box
+# enter the infomraiton
+# search
+
+# creating a variable for the search box
+searchBox = driver.find_element(By.ID, 'searchboxinput')
+searchBox.clear()
+searchBox.send_keys(f'{reason} in {loc_name}')
+searchBox.send_keys(Keys.ENTER)
+
+
+# implmement code to get the name of the place, rating, reviews
+
 
 # temp implementation of passing in CITY or ZIP CODE
 # ex. VARIABLE.send_keys('REASON in CITY/ZIP CODE')
