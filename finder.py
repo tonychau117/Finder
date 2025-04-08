@@ -65,12 +65,16 @@ searchBox.send_keys(f'{reason} in {loc_name}')
 searchBox.send_keys(Keys.ENTER)
 
 # implmement code to get the name of the place, rating, reviews
+# might get the first ten places that show up
+
+# coding it
+# need to click on the locations that show up in order to retrieve the information
+# use mouse clicks, then extract the data from the pop up
+# figure out a way to loop
+
+reviewID = 0 # temp var for review
+nameID = '' # temp var for name of the place
 
 
-# temp implementation of passing in CITY or ZIP CODE
-# ex. VARIABLE.send_keys('REASON in CITY/ZIP CODE')
-
-# create a list of locations            
-# filter by class name or class ID
 
 # driver.close() # closes the browser 
