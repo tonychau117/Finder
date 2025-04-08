@@ -52,16 +52,17 @@ driver.get(url)
 
 driver.implicitly_wait(5) # using an implicit wait to help us sync browser and code so that it does not return an exception
 
+'''
 # implement code to find the text box
 # enter the infomraiton
 # search
-
 # creating a variable for the search box
+'''
+
 searchBox = driver.find_element(By.ID, 'searchboxinput')
 searchBox.clear()
 searchBox.send_keys(f'{reason} in {loc_name}')
 searchBox.send_keys(Keys.ENTER)
-
 
 # implmement code to get the name of the place, rating, reviews
 
