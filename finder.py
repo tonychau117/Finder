@@ -31,10 +31,9 @@ url = 'https://www.google.com/maps/@32.7678627,-117.0676283,3643m/data=!3m1!1e3?
 loc_method = ['city', 'zip code']
 
 type = input("Enter if you are searching by CITY or ZIP CODE")
-print(type.lower())
 
 if type.lower() in loc_method: # if it is in the loc_method
-    print('works')
+    pass
 else: # else if not city, we constantly ask until we get the right
     while type.lower() not in loc_method:
         type = input("Enter if you are searching by CITY or ZIP CODE")
@@ -59,22 +58,39 @@ driver.implicitly_wait(5) # using an implicit wait to help us sync browser and c
 # creating a variable for the search box
 '''
 
+query = reason + ' in '  + loc_name
+
 searchBox = driver.find_element(By.ID, 'searchboxinput')
 searchBox.clear()
-searchBox.send_keys(f'{reason} in {loc_name}')
+searchBox.send_keys(f'{query}')
 searchBox.send_keys(Keys.ENTER)
 
-# implmement code to get the name of the place, rating, reviews
-# might get the first ten places that show up
+# 4/12 - 3:49: looping through each resulting element //a[@class]
 
-# coding it
-# need to click on the locations that show up in order to retrieve the information
-# use mouse clicks, then extract the data from the pop up
-# figure out a way to loop
+
+namexpath = '/html/body/div[1]/div[3]/div[8]/div[9]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]/div/div[1]/div[1]/h1/span[1]'
+
+name = driver.find_elements(By.XPATH, namexpath)
+print(name)
+
+# implement code to get name reviews cost
+# results = driver.find_elements(By.XPATH, customxpath)
+
+for ele in name:
+    n1 = ele.text
+    print(n1)
+
+
+# coding it, no need for loop, use css selector to get all the data at once
+# stack overflow links:
+# results = driver.find_element(By.CSS_SELECTOR, f'div[aria-label="Results for {query}"]')
+# titles = results.find_elements(By.CSS_SELECTOR, 'div[class="NrDZNb"]')
+
+
+# r1 = driver.find_element(By.CLASS_NAME, 'hfpxzc')
+
 
 reviewID = 0 # temp var for review
 nameID = '' # temp var for name of the place
-
-
 
 # driver.close() # closes the browser 
