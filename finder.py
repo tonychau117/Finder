@@ -18,32 +18,17 @@ OVERVIEW OF THE FINDER APPLICATION
 - ex. In-N-Out: 4.5 Stars, reviewers commonly described this place as "cheap, convenient, tasty"
     
 '''
+import location
 
 from selenium import webdriver # imports the webdriver
 from selenium.webdriver.common.keys import Keys # allows us to use input
-from selenium.webdriver.common.by import By # 
+from selenium.webdriver.common.by import By 
 
-url = 'https://www.google.com/maps/@32.7678627,-117.0676283,3643m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MDMxOC4wIKXMDSoJLDEwMjExNjQwSAFQAw%3D%3D'
+import time
 
-# use a while loop to ask for the kind of input (zip code vs city)
-# prototype implementation
+url = 'https://www.google.com/maps'
 
-loc_method = ['city', 'zip code']
-
-type = input("Enter if you are searching by CITY or ZIP CODE")
-
-if type.lower() in loc_method: # if it is in the loc_method
-    pass
-else: # else if not city, we constantly ask until we get the right
-    while type.lower() not in loc_method:
-        type = input("Enter if you are searching by CITY or ZIP CODE")
-
-loc_name = input(f'Enter the {type}')
-
-# prompt the user for what they are searching for in the area
-reason = ''
-while reason == '':
-    reason = input(f'What are you searching for in {loc_name}')
+query = input('What are you searching for: ')
 
 options = webdriver.FirefoxOptions()
 driver = webdriver.Firefox(options = options)
@@ -58,39 +43,56 @@ driver.implicitly_wait(5) # using an implicit wait to help us sync browser and c
 # creating a variable for the search box
 '''
 
-query = reason + ' in '  + loc_name
-
 searchBox = driver.find_element(By.ID, 'searchboxinput')
 searchBox.clear()
 searchBox.send_keys(f'{query}')
 searchBox.send_keys(Keys.ENTER)
 
-# 4/12 - 3:49: looping through each resulting element //a[@class]
+# holds the list of locations that appear on query finish
 
+# holding locations
 
-namexpath = '/html/body/div[1]/div[3]/div[8]/div[9]/div/div/div[1]/div[2]/div/div[1]/div/div/div[2]/div/div[1]/div[1]/h1/span[1]'
+def scrollAndCollect(scrolls):
+    results_panel = driver.find_element(By.XPATH, "//div[@role='feed']")
+    
+    # avoid duplicates
+    seenLocations = set()
+    allLocations = []
+    
+    # scroll many times to load
+    for i in range(scrolls):
+        # scrolling
+        driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", results_panel)
+        time.sleep(2) # wait
+        
+        # all location currently visible
+        locationNames = driver.find_elements(By.XPATH, "//div[@role='article']//h3 | //div[contains(@class, 'fontHeadlineSmall')]")
+        
+        # If we didn't find elements with the above XPath, try the alternative
+        if len(locationNames) == 0:
+            locationNames = driver.find_elements(By.XPATH, "//a[@aria-label]")
+        
+        # Process the elements we found
+        for ln in locationNames:
+            # Get the location name (either from text or aria-label)
+            if ln.text:
+                locationName = ln.text
+            else:
+                locationName = ln.get_attribute('aria-label')
+            
+            # Only add if we haven't seen this location before
+            if locationName and locationName not in seenLocations:
+                seenLocations.add(locationName)
+                allLocations.append(locationName)
+                print(f"Found: {locationName}")
+    
+    return allLocations
 
-name = driver.find_elements(By.XPATH, namexpath)
-print(name)
+allFoundLocs = scrollAndCollect(5)
 
-# implement code to get name reviews cost
-# results = driver.find_elements(By.XPATH, customxpath)
-
-for ele in name:
-    n1 = ele.text
-    print(n1)
-
-
-# coding it, no need for loop, use css selector to get all the data at once
-# stack overflow links:
-# results = driver.find_element(By.CSS_SELECTOR, f'div[aria-label="Results for {query}"]')
-# titles = results.find_elements(By.CSS_SELECTOR, 'div[class="NrDZNb"]')
-
-
-# r1 = driver.find_element(By.CLASS_NAME, 'hfpxzc')
-
-
-reviewID = 0 # temp var for review
-nameID = '' # temp var for name of the place
+print("\n--- All Collected Locations ---")
+for i, location in enumerate(allFoundLocs):
+    print(f"{i+1}. {location}")
+# name = driver.find_elements(By.XPATH, '//a[@aria-label]')
 
 # driver.close() # closes the browser 
