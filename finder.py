@@ -50,7 +50,7 @@ searchBox.send_keys(Keys.ENTER)
 
 # holds the list of locations that appear on query finish
 
-# holding locations
+# xpath for price and address: //div/span[3]/span[2]
 
 def scrollAndCollect(scrolls):
     results_panel = driver.find_element(By.XPATH, "//div[@role='feed']")
